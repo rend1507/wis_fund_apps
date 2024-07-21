@@ -1,6 +1,6 @@
 @include('includes/head')
 
-<body class="login">
+<body class="login-page bg-body-secondary app-loaded">
   
     @yield('content')
     @include('includes/script')
