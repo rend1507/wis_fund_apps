@@ -1,9 +1,10 @@
 <div class="login-box">
-    <div class="login-logo"> <a href="../index2.html"><b>Admin</b>LTE</a> </div> <!-- /.login-logo -->
+    <div class="login-logo"> <a href="<?=URL::to('/')?>"><b>Admin</b>LTE</a> </div> <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form action="../index3.html" method="post">
+            <form action="<?=route('actionlogin')?>" method="post">
+                @csrf
                 <div class="input-group mb-3"> <input type="email" class="form-control" placeholder="Email">
                     <div class="input-group-text"> <span class="bi bi-envelope"></span> </div>
                 </div>
