@@ -31,6 +31,7 @@ class Kernel extends HttpKernel
 
         // Add your custom middleware entries here
         'CheckRole' => \App\Http\Middleware\CheckRoleMiddleware::class,
+        'AfterLogin' => \App\Http\Middleware\AfterLoginMiddleware::class,
     ];
 
     protected $middlewarePriority = [

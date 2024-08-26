@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session;
+
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -24,12 +25,24 @@ class LoginController extends Controller
             'password' => $request->input('password'),
         ];
 
-        if (Auth::Attempt($data)) {
-            return redirect('home');
-        } else {
-            Session::flash('error', 'Email atau Password Salah');
-            return redirect('/');
+
+        $user = User::where('email', $data["email"])->first();
+
+        //  || !Hash::check($data["password"], $user->password)
+
+        if (!$user) {
+            $request->merge(['user_id' => auth()->id()]); // Example of passing user ID to middleware
+            $request->merge(['action' => 'login']); // Example of passing action to middleware
+            // Invalid credentials
+            return redirect()->back()->withErrors(['error' => 'Invalid email or password']);
         }
+
+        // Valid credentials, log the user in
+        // You can use Laravel's Auth facade to log the user in
+        Auth::login($user);
+
+
+        return redirect('home');
     }
 
     public function actionlogout()

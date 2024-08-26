@@ -6,16 +6,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 
-use App\Http\Middleware\CheckRoleMiddleware;
 
 Route::get('/login', function () {
     return view('login');
 });
 
-// TODO: Terapin auth 
-Route::post('/login/auth', [LoginController::class, 'actionlogin']);
+Route::post('/login/auth', [LoginController::class, 'actionlogin'])->name('login.auth');
 
-Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout');
+Route::get('/logout', [LoginController::class, 'actionlogout'])->name('actionlogout');
 
 
 

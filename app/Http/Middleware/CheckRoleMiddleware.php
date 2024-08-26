@@ -18,7 +18,7 @@ class CheckRoleMiddleware
         foreach ($roles as $role) {
             if ($user->role === $role) {
                 $tableName = $this->getTableNameBasedOnRole($user->role);
-                $userData = \DB::table($tableName)->where('user_id', $user->id)->first();
+                $userData = \DB::table($tableName)->where('id_user', $user->id)->first();
 
                 if ($userData) {
                     // Perform any additional logic here if needed
