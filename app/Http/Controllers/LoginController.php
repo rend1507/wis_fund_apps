@@ -18,7 +18,7 @@ class LoginController extends Controller
         }
     }
 
-    public function actionlogin(Request $request)
+    public function actionLogin(Request $request)
     {
         $data = [
             'email' => $request->input('email'),
