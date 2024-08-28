@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect('home');
+            return redirect('');
         } else {
             return view('login');
         }
@@ -20,32 +20,37 @@ class LoginController extends Controller
 
     public function actionLogin(Request $request)
     {
-        $data = [
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
-        ];
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
+        // Check if email is valid before querying the database
+        $email = $validatedData['email'];
 
-        $user = User::where('email', $data["email"])->first();
+        // Query the database with the validated email
+        $user = User::where('email', $email)->first();
 
+        // Untuk password
         //  || !Hash::check($data["password"], $user->password)
 
         if (!$user) {
-            $request->merge(['user_id' => auth()->id()]); // Example of passing user ID to middleware
-            $request->merge(['action' => 'login']); // Example of passing action to middleware
+            $request->merge(['email' => $email]);
+            $request->merge(['action' => 'login']);
             // Invalid credentials
-            return redirect()->back()->withErrors(['error' => 'Invalid email or password']);
+            // return false;
+            return redirect()->back()->withErrors($validatedData);
+        }else{
+            // Valid credentials, log the user in
+            // You can use Laravel's Auth facade to log the user in
+            Auth::login($user);
+
+            return redirect('');
+
         }
-
-        // Valid credentials, log the user in
-        // You can use Laravel's Auth facade to log the user in
-        Auth::login($user);
-
-
-        return redirect('home');
     }
 
-    public function actionlogout()
+    public function actionLogout()
     {
         Auth::logout();
         return redirect('/login');

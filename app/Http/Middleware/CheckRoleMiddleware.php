@@ -27,7 +27,7 @@ class CheckRoleMiddleware
             }
         }
 
-        return redirect('home')->with('error', 'Unauthorized access.');
+        return redirect('')->with('error', 'Unauthorized access.');
     }
 
     // Function to return the table name based on the user role

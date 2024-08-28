@@ -30,8 +30,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 
         // Add your custom middleware entries here
-        'CheckRole' => \App\Http\Middleware\CheckRoleMiddleware::class,
-        'AfterLogin' => \App\Http\Middleware\AfterLoginMiddleware::class,
+        'checkRole' => \App\Http\Middleware\CheckRoleMiddleware::class,
+        'afterLogin' => \App\Http\Middleware\AfterLoginMiddleware::class,
     ];
 
     protected $middlewarePriority = [
