@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AjuanController;
 
 
 Route::group(['middleware' => 'guest'], function () {
@@ -21,7 +22,9 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/logout', [LoginController::class, 'actionLogout'])->name('logout')->middleware('auth');
 
 
-Route::get('', [HomeController::class, 'index'])->name('')->middleware('auth');
+Route::get('', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/ajuan/tambah', [AjuanController::class, 'tambah'])->name('ajuan.tambah')->middleware('auth');
+Route::get('/ajuan/daftar', [AjuanController::class, 'index'])->name('ajuan.daftar')->middleware('auth');
 
 // Route::group(['middleware' => 'checkRole:0,1'], function () {
 //     // Routes accessible to Admin and Superadmin

@@ -1,6 +1,6 @@
 @extends("layouts/loggedin")
 
-@section('title', 'Home')
+@section('title', 'Dashboard')
 
 @section('content')
 @include("content/dashboard")

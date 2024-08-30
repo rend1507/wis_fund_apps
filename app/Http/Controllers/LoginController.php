@@ -31,7 +31,7 @@ class LoginController extends Controller
         // Query the database with the validated email
         $user = User::where('email', $email)->first();
 
-        // Untuk password
+        // TODO: Saat deploy, beri ini untuk cek password
         //  || !Hash::check($data["password"], $user->password)
 
         if (!$user) {
@@ -39,7 +39,7 @@ class LoginController extends Controller
             $request->merge(['action' => 'login']);
             // Invalid credentials
             // return false;
-            return redirect()->back()->withErrors($validatedData);
+            return redirect()->back()->withErrors(["E-mail dan password salah, silahkan cek ulang"]);
         }else{
             // Valid credentials, log the user in
             // You can use Laravel's Auth facade to log the user in

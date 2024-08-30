@@ -12,7 +12,7 @@
     integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
 <!--end::Required Plugin(Bootstrap 5)-->
 <!--begin::Required Plugin(AdminLTE)-->
-<script src="assets/js/adminlte.js"></script>
+<script src="<?=url("/")?>/assets/js/adminlte.js"></script>
 <!--end::Required Plugin(AdminLTE)-->
 <!--begin::OverlayScrollbars Configure-->
 <script>
