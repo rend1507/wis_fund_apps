@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class USerBasic extends Authenticatable
+class UserBase extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -17,9 +17,9 @@ class USerBasic extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name_user_basic',
-        'email_user_basic',
-        'password_user_basic',
+        'name_user_base',
+        'email_user_base',
+        'password_user_base',
     ];
 
     /**
@@ -28,8 +28,8 @@ class USerBasic extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password_user_basic',
-        'remember_token_user_basic',
+        'password_user_base',
+        'remember_token_user_base',
     ];
 
     /**
@@ -40,8 +40,8 @@ class USerBasic extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at_user_basic' => 'datetime',
-            'password_user_basic' => 'hashed',
+            'email_verified_at_user_base' => 'datetime',
+            'password_user_base' => 'hashed',
         ];
     }
 }

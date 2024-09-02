@@ -40,7 +40,7 @@ class CheckRoleMiddleware
             case 2:
             case 3:
             case 4:
-                return 'user_basic';
+                return 'user_base';
             case 5:
             case 6:
                 return 'user_intermediate';
