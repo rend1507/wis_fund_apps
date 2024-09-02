@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\User;
+use App\Models\UserBasic;
 
 class LoginController extends Controller
 {
@@ -29,10 +29,10 @@ class LoginController extends Controller
         $email = $validatedData['email'];
 
         // Query the database with the validated email
-        $user = User::where('email', $email)->first();
+        $user = UserBasic::where('email_users_basic', $email)->first();
 
         // TODO: Saat deploy, beri ini untuk cek password
-        //  || !Hash::check($data["password"], $user->password)
+        //  || !Hash::check($data["password_users_basic"], $user->password)
 
         if (!$user) {
             $request->merge(['email' => $email]);
