@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserBase;
+use App\Models\UserBasic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,10 +22,10 @@ class RegisterController extends Controller
             'verification' => 'required|same:password',
         ]);
 
-        $user = new UserBase();
-        $user->name_user_base = $request->name;
-        $user->email_user_base = $request->email;
-        $user->password_user_base = Hash::make($request->password);
+        $user = new UserBasic();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
         
         if($user->save()){
             // Redirect to a success page or login page

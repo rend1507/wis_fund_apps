@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserBasic;
+use Illuminate\Support\Facades\Hash;
 
-use App\Models\UserBase;
 
 class LoginController extends Controller
 {
@@ -29,10 +30,10 @@ class LoginController extends Controller
         $email = $validatedData['email'];
 
         // Query the database with the validated email
-        $user = UserBase::where('email_user_base', $email)->first();
+        $user = UserBasic::where('email', $email)->first();
 
         // TODO: Saat deploy, beri ini untuk cek password
-        //  || !Hash::check($data["password__user_base"], $user->password)
+        //  || !Hash::check($data["password"], $user->password)
 
         if (!$user) {
             $request->merge(['email' => $email]);
@@ -44,9 +45,8 @@ class LoginController extends Controller
             // Valid credentials, log the user in
             // You can use Laravel's Auth facade to log the user in
             Auth::login($user);
-
+            // User is now logged in
             return redirect('');
-
         }
     }
 
