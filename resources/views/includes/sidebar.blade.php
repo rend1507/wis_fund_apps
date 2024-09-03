@@ -31,14 +31,16 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item"> <a href="<?=route("ajuan.tambah")?>" class="nav-link <?=($currentRoute == "ajuan.tambah") ? "active" : ""?>"> <i
-                                    class="nav-icon bi bi-circle"></i>
-                                <p>Tambah Pengajuan</p>
-                            </a> </li>
                         <li class="nav-item"> <a href="<?=route("ajuan.daftar")?>" class="nav-link <?=($currentRoute == "ajuan.daftar") ? "active" : ""?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Daftar Pengajuan</p>
-                            </a> </li>
+                            </a>
+                        </li>
+                        <li class="nav-item"> <a href="<?=route("ajuan.tambah")?>" class="nav-link <?=($currentRoute == "ajuan.tambah") ? "active" : ""?>"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Tambah Pengajuan</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>

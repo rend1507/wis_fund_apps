@@ -24,6 +24,7 @@ Route::get('/logout', [LoginController::class, 'actionLogout'])->name('logout')-
 
 Route::get('', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/ajuan/tambah', [AjuanController::class, 'tambah'])->name('ajuan.tambah')->middleware('auth');
+Route::get('/ajuan/tambah/action', [AjuanController::class, 'tambahAction'])->name('ajuan.tambah.action')->middleware('auth');
 Route::get('/ajuan/daftar', [AjuanController::class, 'index'])->name('ajuan.daftar')->middleware('auth');
 
 // Route::group(['middleware' => 'checkRole:0,1'], function () {

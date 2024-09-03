@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2024 at 11:03 AM
+-- Generation Time: Sep 03, 2024 at 08:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -132,6 +132,31 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pengajuan_proses`
+--
+
+CREATE TABLE `pengajuan_proses` (
+  `id_pengajuan` int(5) UNSIGNED ZEROFILL NOT NULL,
+  `nama_pengajuan` varchar(40) NOT NULL DEFAULT 'Pengajuan',
+  `deskripsi_pengajuan` text DEFAULT '-',
+  `jumlah_anggaran_pengajuan` int(10) NOT NULL,
+  `detail_anggaran_pengajuan` text NOT NULL,
+  `sifat_pengajuan` int(1) NOT NULL DEFAULT 0 COMMENT '0 = Tidak mendesak\r\n1 = Mendesak',
+  `created_at_pengajuan` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at_pengajuan` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pengajuan_proses`
+--
+
+INSERT INTO `pengajuan_proses` (`id_pengajuan`, `nama_pengajuan`, `deskripsi_pengajuan`, `jumlah_anggaran_pengajuan`, `detail_anggaran_pengajuan`, `sifat_pengajuan`, `created_at_pengajuan`, `updated_at_pengajuan`) VALUES
+(00001, 'A', '123asd', 123, '123', 0, '2024-09-04 01:29:15', NULL),
+(00002, 'Inilah tes', 'ase\r\n2\r\nasd\r\n123', 10010, 'JIDJSp', 1, '2024-09-04 01:45:44', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -149,15 +174,15 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('vFQU90Kyp3pMPLF2JmI8AMgrwCNDRp1Vc5BB4MwK', NULL, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiclVkaEFLZjdGVHhjUHZzenVhTE5nUmlFMWVkWWxpc2xBcGhiaDFqciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MzoidXJsIjthOjE6e3M6ODoiaW50ZW5kZWQiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fX0=', 1724835752);
+('Vhuq1FiGjSQ8xcFZdDarjfUsZDUyypS4itapjF2x', 1, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiakFyTVRpQlBjZHBnc1JBQ21MV2R6RmN5TFZOUGFaN21iclBqV0IyNiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hanVhbi9kYWZ0YXIiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MzoidXJsIjthOjE6e3M6ODoiaW50ZW5kZWQiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fX0=', 1725389325);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `user_basic`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `user_basic` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -169,10 +194,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user_basic`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+INSERT INTO `user_basic` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Rendy Yofana', 'rendyyofanakusuma@gmail.com', NULL, '$2y$12$P9Qe89ki26EE8tD.ujrjyeEQj.TgJn4oRY8LEs2wn56p4jN2Nb4ki', NULL, '2024-08-28 00:50:03', '2024-08-28 00:50:03');
 
 --
@@ -224,6 +249,12 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `pengajuan_proses`
+--
+ALTER TABLE `pengajuan_proses`
+  ADD PRIMARY KEY (`id_pengajuan`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -232,9 +263,9 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `user_basic`
 --
-ALTER TABLE `users`
+ALTER TABLE `user_basic`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
@@ -261,9 +292,15 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for table `pengajuan_proses`
 --
-ALTER TABLE `users`
+ALTER TABLE `pengajuan_proses`
+  MODIFY `id_pengajuan` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user_basic`
+--
+ALTER TABLE `user_basic`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 

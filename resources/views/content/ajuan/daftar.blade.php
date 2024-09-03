@@ -1,3 +1,5 @@
+
+
 <div class="app-content-header">
     <!--begin::Container-->
     <div class="container-fluid">
@@ -26,62 +28,52 @@
     <div class="container-fluid">
         <!--begin::Row-->
         <div class="row">
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Bordered Table</h3>
-                    </div> <!-- /.card-header -->
-                    <div class="card-body">
+            <div class="col-12">
+                @if (session("success"))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
+            </div>
+            <div class="col-12">
+                <div class="card mb-4"><div class="card-body">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Task</th>
-                                    <th>Progress</th>
-                                    <th style="width: 40px">Label</th>
+                                    <th style="width: 10px">Nomor</th>
+                                    <th>Nama</th>
+                                    <th>Deskripsi</th>
+                                    <th>Jumlah (Rp)</th>
+                                    <th>Detail</th>
+                                    <th>Sifat</th>
+                                    <th>Diajukan Pada</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="align-middle">
                                     <td>1.</td>
-                                    <td>Update software</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge text-bg-danger">55%</span></td>
+                                    <td>Ini nama</td>
+                                    <td>Ini Deskripsi</td>
+                                    <td>Ini Jumlah</td>
+                                    <td>Ini Detail</td>
+                                    <td>Ini Sifat</td>
+                                    <td>Ini Tanggal Aju</td>
                                 </tr>
-                                <tr class="align-middle">
-                                    <td>2.</td>
-                                    <td>Clean database</td>
-                                    <td>
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar text-bg-warning" style="width: 70%"></div>
-                                        </div>
-                                    </td>
-                                    <td> <span class="badge text-bg-warning">70%</span> </td>
-                                </tr>
-                                <tr class="align-middle">
-                                    <td>3.</td>
-                                    <td>Cron job running</td>
-                                    <td>
-                                        <div class="progress progress-xs progress-striped active">
-                                            <div class="progress-bar text-bg-primary" style="width: 30%"></div>
-                                        </div>
-                                    </td>
-                                    <td> <span class="badge text-bg-primary">30%</span> </td>
-                                </tr>
-                                <tr class="align-middle">
-                                    <td>4.</td>
-                                    <td>Fix and squish bugs</td>
-                                    <td>
-                                        <div class="progress progress-xs progress-striped active">
-                                            <div class="progress-bar text-bg-success" style="width: 90%"></div>
-                                        </div>
-                                    </td>
-                                    <td> <span class="badge text-bg-success">90%</span> </td>
-                                </tr>
+                                @foreach($ajuans as $ajuan)
+                                    <tr class="align-middle">
+                                        <td>{{ $loop->iteration }}.</td>
+                                        <td>{{ $ajuan->nama_pengajuan }}</td>
+                                        <td>{{ $ajuan->deskripsi_pengajuan }}</td>
+                                        <td>{{ $ajuan->jumlah_anggaran_pengajuan }}</td>
+                                        <td>{{ $ajuan->detail_anggaran_pengajuan }}</td>
+                                        <td class="text-center">
+                                            <div class="badge w-100 bg-{{ $ajuan->sifat_pengajuan=="0" ? "primary": "danger"}}">
+                                                {{ $ajuan->sifat_pengajuan=="0" ? "Biasa": "MENDESAK"}}
+                                            </div>
+                                        </td>
+                                        <td>{{ $ajuan->created_at_pengajuan_formatted }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div> <!-- /.card-body -->

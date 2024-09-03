@@ -32,44 +32,47 @@
             <div class="col">
                 <!--begin::Input Group-->
                 <div class="card card-success card-outline mb-4">
-                    <!--begin::Header-->
-                    <div class="card-header">
-                        <div class="card-title">Input Group</div>
-                    </div>
-                    <!--end::Header-->
+                    <form action="<?=route("ajuan.tambah.action")?>">
                     <!--begin::Body-->
                     <div class="card-body">
-                        <div class="input-group mb-3"> <span class="input-group-text" id="basic-addon1">@</span>
-                            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                                aria-describedby="basic-addon1">
+                        <div class="mb-3">
+                            <label for="nama-pengajuan" class="form-label">Nama Pengajuan</label>
+                            <input type="text" class="form-control" placeholder="Masukkan nama pengajuan" aria-label="Nama Pengajuan"
+                                id="nama-pengajuan" name="nama_pengajuan">
                         </div>
-                        <div class="input-group mb-3"> <input type="text" class="form-control"
-                                placeholder="Recipient's username" aria-label="Recipient's username"
-                                aria-describedby="basic-addon2"> <span class="input-group-text"
-                                id="basic-addon2">@example.com</span> </div>
-                        <div class="mb-3"> <label for="basic-url" class="form-label">Your vanity URL</label>
-                            <div class="input-group"> <span class="input-group-text"
-                                    id="basic-addon3">https://example.com/users/</span>
-                                <input type="text" class="form-control" id="basic-url"
-                                    aria-describedby="basic-addon3 basic-addon4">
-                            </div>
-                            <div class="form-text" id="basic-addon4">
-                                Example help text goes outside the input group.
+                        <div class="mb-3">
+                            <label for="deksripsi-pengajuan" class="form-label">Deskripsi Pengajuan</label>
+                            <textarea class="form-control" aria-label="With textarea" id="deskripsi-pengajuan" name="deskripsi_pengajuan"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jumlah-anggaran-pengajuan" class="form-label">Jumlah Anggaran Pengajuan</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="jumlah-anggaran-pengajuan-1">Rp</span>
+                                <input type="number" class="form-control" placeholder="Contoh : 1000" aria-label="Jumlah Anggaran Pengajuan"
+                                    aria-describedby="jumlah-anggaran-pengajuan" name="jumlah_anggaran_pengajuan" id="jumlah-anggaran-pengajuan">
                             </div>
                         </div>
-                        <div class="input-group mb-3"> <span class="input-group-text">$</span> <input type="text"
-                                class="form-control" aria-label="Amount (to the nearest dollar)"> <span
-                                class="input-group-text">.00</span> </div>
-                        <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Username"
-                                aria-label="Username"> <span class="input-group-text">@</span> <input type="text"
-                                class="form-control" placeholder="Server" aria-label="Server"> </div>
-                        <div class="input-group"> <span class="input-group-text">With textarea</span> <textarea
-                                class="form-control" aria-label="With textarea"></textarea> </div>
+                        <div class="mb-3">
+                            <label for="detail-anggaran-pengajuan" class="form-label">Detail Anggaran</label>
+                            <textarea class="form-control" aria-label="With textarea" id="detail-pengajuan"
+                                name="detail_anggaran_pengajuan"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sifat-pengajuan" class="form-label">Sifat Anggaran</label>
+                            <br>
+                            <select name="sifat_pengajuan" class="form-control" id="sifat-pengajuan">
+                                <option value="0">Biasa</option>
+                                <option value="1">Mendesak</option>
+                            </select>
+                        </div>
+                        
                     </div>
                     <!--end::Body-->
                     <!--begin::Footer-->
-                    <div class="card-footer"> <button type="submit" class="btn btn-success float-end">Submit</button> </div>
+                    <div class="card-footer"> <button type="submit" class="btn btn-success float-end">Submit</button>
+                    </div>
                     <!--end::Footer-->
+                    </form>
                 </div>
                 <!--end::Input Group-->
             </div>
