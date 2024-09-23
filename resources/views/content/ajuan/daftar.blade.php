@@ -50,15 +50,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="align-middle">
-                                    <td>1.</td>
-                                    <td>Ini nama</td>
-                                    <td>Ini Deskripsi</td>
-                                    <td>Ini Jumlah</td>
-                                    <td>Ini Detail</td>
-                                    <td>Ini Sifat</td>
-                                    <td>Ini Tanggal Aju</td>
-                                </tr>
                                 @foreach($ajuans as $ajuan)
                                     <tr class="align-middle">
                                         <td>{{ $loop->iteration }}.</td>

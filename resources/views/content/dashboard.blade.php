@@ -29,7 +29,7 @@
                 <!--begin::Small Box Widget 1-->
                 <div class="small-box text-bg-primary">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>{{ $count["total"] }}</h3>
                         <p>Anggaran Diajukan</p>
                     </div>
                     <i class="small-box-icon bi bi-arrow-up-right-circle-fill"></i>
@@ -42,7 +42,7 @@
                 <!--begin::Small Box Widget 2-->
                 <div class="small-box text-bg-success">
                     <div class="inner">
-                        <h3>10</h3>
+                        <h3>{{ $count["success"] }}</h3>
                         <p>Anggaran Disetujui</p>
                     </div>
                     <i class="small-box-icon bi bi-patch-check-fill"></i>
@@ -55,7 +55,7 @@
                 <!--begin::Small Box Widget 3-->
                 <div class="small-box text-bg-danger">
                     <div class="inner">
-                        <h3>90</h3>
+                        <h3>{{ $count["reject"] }}</h3>
                         <p>Anggaran Ditolak</p>
                     </div>
                     <i class="small-box-icon bi bi-x-circle-fill"></i>
@@ -68,7 +68,7 @@
                 <!--begin::Small Box Widget 4-->
                 <div class="small-box text-bg-warning">
                     <div class="inner">
-                        <h3>60</h3>
+                        <h3>{{ $count["pending"] }}</h3>
                         <p>Anggaran Menunggu Review</p>
                     </div>
                     <i class="small-box-icon bi bi-hourglass-split"></i>
