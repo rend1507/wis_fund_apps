@@ -47,6 +47,7 @@
                                     <th>Detail</th>
                                     <th>Sifat</th>
                                     <th>Diajukan Pada</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,6 +65,9 @@
                                             </div>
                                         </td>
                                         <td>{{ $ajuan->created_at_pengajuan_formatted }}</td>
+                                        <td>
+                                            <a href="<?=route("ajuan.editId", ['id' => $ajuan->id_pengajuan])?>">Edit</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -75,13 +79,13 @@
                     
                     <!-- Pagination Links -->
                     
-                    <nav>
-                        <ul class="pagination">
+                    <nav class="m-4">
+                        <ul class="pagination pagination-sm m-0 float-end">
                             {{-- Previous Page Link --}}
                             @if ($data->onFirstPage())
-                            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                            <li class="page-item disabled"><span class="page-link">«</span></li>
                             @else
-                            <li class="page-item"><a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev">«</a></li>
                             @endif
                     
                             {{-- Pagination Links --}}
@@ -95,9 +99,9 @@
                     
                             {{-- Next Page Link --}}
                             @if ($data->hasMorePages())
-                            <li class="page-item"><a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next">»</a></li>
                             @else
-                            <li class="page-item disabled"><span class="page-link">Next</span></li>
+                            <li class="page-item disabled"><span class="page-link">»</span></li>
                             @endif
                         </ul>
                     </nav>

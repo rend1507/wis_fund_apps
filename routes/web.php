@@ -27,6 +27,11 @@ Route::get('/ajuan/tambah', [AjuanController::class, 'tambah'])->name('ajuan.tam
 Route::get('/ajuan/tambah/action', [AjuanController::class, 'tambahAction'])->name('ajuan.tambah.action')->middleware('auth');
 Route::get('/ajuan/daftar', [AjuanController::class, 'index'])->name('ajuan.daftar')->middleware('auth');
 
+
+Route::get('/ajuan/edit/{id}', [AjuanController::class, 'editId'])->name('ajuan.editId')->middleware('auth');
+Route::get('/ajuan/edit/', [AjuanController::class, 'edit'])->name('ajuan.edit')->middleware('auth');
+Route::get('/ajuan/edit/action', [AjuanController::class, 'editAction'])->name('ajuan.edit.action')->middleware('auth');
+
 // Route::group(['middleware' => 'checkRole:0,1'], function () {
 //     // Routes accessible to Admin and Superadmin
 

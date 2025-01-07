@@ -32,44 +32,51 @@
             <div class="col">
                 <!--begin::Input Group-->
                 <div class="card card-success card-outline mb-4">
-                    <form action="<?=route("ajuan.tambah.action")?>">
+                    <form action="<?=session('edit_id') ? route("ajuan.edit.action") : route("ajuan.tambah.action")?>">
                     <!--begin::Body-->
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="nama-pengajuan" class="form-label">Nama Pengajuan</label>
                             <input type="text" class="form-control" placeholder="Masukkan nama pengajuan" aria-label="Nama Pengajuan"
-                                id="nama-pengajuan" name="nama_pengajuan">
+                                id="nama-pengajuan" name="nama_pengajuan" value="{{ isset($data) ? $data->nama_pengajuan :"" }}" >
                         </div>
+                        
                         <div class="mb-3">
                             <label for="deksripsi-pengajuan" class="form-label">Deskripsi Pengajuan</label>
-                            <textarea class="form-control" aria-label="With textarea" id="deskripsi-pengajuan" name="deskripsi_pengajuan"></textarea>
+                            <textarea class="form-control" aria-label="With textarea" id="deskripsi-pengajuan" name="deskripsi_pengajuan">{{ isset($data) ? $data->deskripsi_pengajuan :"" }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="jumlah-anggaran-pengajuan" class="form-label">Jumlah Anggaran Pengajuan</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="jumlah-anggaran-pengajuan-1">Rp</span>
                                 <input type="number" class="form-control" placeholder="Contoh : 1000" aria-label="Jumlah Anggaran Pengajuan"
-                                    aria-describedby="jumlah-anggaran-pengajuan" name="jumlah_anggaran_pengajuan" id="jumlah-anggaran-pengajuan">
+                                    aria-describedby="jumlah-anggaran-pengajuan" name="jumlah_anggaran_pengajuan" id="jumlah-anggaran-pengajuan"
+                                    value="{{ isset($data) ? $data->jumlah_anggaran_pengajuan :"" }}">
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="detail-anggaran-pengajuan" class="form-label">Detail Anggaran</label>
                             <textarea class="form-control" aria-label="With textarea" id="detail-pengajuan"
-                                name="detail_anggaran_pengajuan"></textarea>
+                                name="detail_anggaran_pengajuan">{{ isset($data) ? $data->detail_anggaran_pengajuan :"" }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="sifat-pengajuan" class="form-label">Sifat Anggaran</label>
                             <br>
                             <select name="sifat_pengajuan" class="form-control" id="sifat-pengajuan">
-                                <option value="0">Biasa</option>
-                                <option value="1">Mendesak</option>
+                                <option value="0" {{ isset($data) ? $data->sifat_pengajuan=="0" ? "selected" : "" : "" }}>Biasa</option>
+                                <option value="1" {{ isset($data) ? $data->sifat_pengajuan=="1" ? "selected" : "" : "" }}>Mendesak</option>
                             </select>
                         </div>
                         
                     </div>
                     <!--end::Body-->
                     <!--begin::Footer-->
-                    <div class="card-footer"> <button type="submit" class="btn btn-success float-end">Submit</button>
+                    <div class="card-footer">
+                        @if(session('edit_id'))
+                        <button type="submit" class="btn btn-warning float-end">Edit</button>
+                        @else
+                        <button type="submit" class="btn btn-success float-end">Submit</button>
+                        @endif
                     </div>
                     <!--end::Footer-->
                     </form>

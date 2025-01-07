@@ -10,7 +10,8 @@ class Pengajuan extends Model
     use HasFactory;
 
     protected $table = "pengajuan_proses";
-// TEMP
+    protected $primaryKey = 'id_pengajuan';
+    // TEMP
 // TODO: Make all pengajuan listed
 
     public $timestamps = false;
