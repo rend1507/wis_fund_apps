@@ -5,16 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pengajuan;
 use App\Models\PengajuanProses;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AjuanController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         $currentRoute = "ajuan.daftar";
-        $ajuans = Pengajuan::all();
 
-        return view('pages.ajuan.daftar', ['currentRoute' => $currentRoute, 'ajuans' => $ajuans]);
+        $allData = Pengajuan::all();
+
+        // Current page number
+        $currentPage = $request->get('page', 1);
+
+        // Items per page
+        $perPage = 10; //TODO: Set to global and can be modified within select box
+
+        // Slice the data for the current page
+        $currentPageData = $allData->slice(($currentPage - 1) * $perPage, $perPage);
+
+        // Create a paginator
+        $data = new LengthAwarePaginator(
+            $currentPageData,
+            $allData->count(),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+
+
+        return view('pages.ajuan.daftar', ['currentRoute' => $currentRoute, 'data' => $data, ]);
     }
     public function tambah()
     {

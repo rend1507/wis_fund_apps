@@ -50,7 +50,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($ajuans as $ajuan)
+                                
+                                @foreach($data as $ajuan)
                                     <tr class="align-middle">
                                         <td>{{ $loop->iteration }}.</td>
                                         <td>{{ $ajuan->nama_pengajuan }}</td>
@@ -68,15 +69,38 @@
                             </tbody>
                         </table>
                     </div> <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-end">
-                            <li class="page-item"> <a class="page-link" href="#">«</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                            <li class="page-item"> <a class="page-link" href="#">»</a> </li>
+                    @if ($data->isEmpty())
+                    <p>No data available.</p>
+                    @endif
+                    
+                    <!-- Pagination Links -->
+                    
+                    <nav>
+                        <ul class="pagination">
+                            {{-- Previous Page Link --}}
+                            @if ($data->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                            @else
+                            <li class="page-item"><a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev">Previous</a></li>
+                            @endif
+                    
+                            {{-- Pagination Links --}}
+                            @for ($page = 1; $page <= $data->lastPage(); $page++)
+                                @if ($page == $data->currentPage())
+                                <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+                                @else
+                                <li class="page-item"><a class="page-link" href="{{ $data->url($page) }}">{{ $page }}</a></li>
+                                @endif
+                            @endfor
+                    
+                            {{-- Next Page Link --}}
+                            @if ($data->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next">Next</a></li>
+                            @else
+                            <li class="page-item disabled"><span class="page-link">Next</span></li>
+                            @endif
                         </ul>
-                    </div>
+                    </nav>
                 </div> <!-- /.card -->
             </div> <!-- /.col -->
         </div>

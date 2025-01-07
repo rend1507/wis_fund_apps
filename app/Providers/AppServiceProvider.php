@@ -5,15 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
 
+use Illuminate\Pagination\Paginator;
+
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
 
     /**
      * Bootstrap any application services.
@@ -21,5 +16,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Carbon::setLocale('id'); // Set the locale to Indonesian
+        Paginator::useBootstrap();
+    }
+
+
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
     }
 }

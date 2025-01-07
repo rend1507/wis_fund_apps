@@ -14,9 +14,9 @@ class HomeController extends Controller
     {
         $currentRoute = "home";
         $countPending = PengajuanProses::count();
-        $countSuccess = Pengajuan::count();
-        $countReject = Pengajuan::count();
-        $countTotal = Pengajuan::count();
+        $countSuccess = Pengajuan::count(); //TEMP
+        $countReject = Pengajuan::count(); //TEMP
+        $countTotal = Pengajuan::count(); //TEMP
 
         return view('home', [
             'currentRoute' => $currentRoute,
