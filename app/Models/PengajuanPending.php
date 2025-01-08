@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pengajuan extends Model
+class PengajuanPending extends Model
 {
     use HasFactory;
 
-    protected $table = "pengajuan_proses";
+    protected $table = "pengajuan_pending";
     protected $primaryKey = 'id_pengajuan';
-    // TEMP
-// TODO: Make all pengajuan listed
 
     public $timestamps = false;
 
@@ -53,6 +51,7 @@ class Pengajuan extends Model
             'updated_at_pengajuan' => 'datetime',
         ];
     }
+
 
     public function getCreatedAtPengajuanFormattedAttribute()
     {

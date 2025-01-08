@@ -12,7 +12,7 @@
                 </ul>
             </div>
             @endif
-            <form action="{{ route("register.auth") }}" method="post">
+            <form action="{{ route('register.auth') }}" method="post">
                 @csrf
                 <div class="input-group mb-3"> <input name="name" type="text" class="form-control" placeholder="Full Name">
                     <div class="input-group-text"> <span class="bi bi-person"></span> </div>

@@ -79,7 +79,7 @@
             <!--begin::Col-->
             <div class="col-lg-2 col-12">
                 <!--begin::Small Box Widget 4-->
-                <a class="info-box" href="<?=route("ajuan.daftar")?>">
+                <a class="info-box" href="<?=route('ajuan.daftar')?>">
                     <div class="info-box-content">
                         <div class="info-box-text d-flex justify-content-between">
                             <span class="mb-0">Lihat Daftar Pengajuan</span>

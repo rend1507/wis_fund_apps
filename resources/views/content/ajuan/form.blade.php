@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="<?=route("home")?>">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="<?=route('home')?>">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="#">Pengajuan</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
                         @yield("title")
@@ -31,8 +31,8 @@
             <!--begin::Col-->
             <div class="col">
                 <!--begin::Input Group-->
-                <div class="card card-success card-outline mb-4">
-                    <form action="<?=session('edit_id') ? route("ajuan.edit.action") : route("ajuan.tambah.action")?>">
+                <div class="card card-outline mb-4 <?=session('edit_id') ? 'card-warning' : 'card-success'?>">
+                    <form action="<?=route('ajuan.form.action')?>">
                     <!--begin::Body-->
                     <div class="card-body">
                         <div class="mb-3">

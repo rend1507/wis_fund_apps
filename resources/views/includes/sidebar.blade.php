@@ -19,7 +19,7 @@
             <!--begin::Sidebar Menu-->
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 <li class="nav-item active">
-                    <a href="<?= route("home")?>" class="nav-link <?=($currentRoute == "home") ? "active" : ""?>">
+                    <a href="<?= route('home')?>" class="nav-link <?=($currentRoute == "home") ? "active" : ""?>">
                         <i class="nav-icon bi bi-house-fill"></i>
                         <p>Dashboard</p>
                     </a>
@@ -31,12 +31,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item"> <a href="<?=route("ajuan.daftar")?>" class="nav-link <?=($currentRoute == "ajuan.daftar") ? "active" : ""?>"> <i
+                        <li class="nav-item"> <a href="<?=route('ajuan.daftar')?>" class="nav-link <?=($currentRoute == "ajuan.daftar") ? "active" : ""?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Daftar Pengajuan</p>
                             </a>
                         </li>
-                        <li class="nav-item"> <a href="<?=route("ajuan.tambah")?>" class="nav-link <?=($currentRoute == "ajuan.tambah") ? "active" : ""?>"> <i
+                        <li class="nav-item"> <a href="<?=route('ajuan.tambah')?>" class="nav-link <?=($currentRoute == "ajuan.tambah") ? "active" : ""?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Tambah Pengajuan</p>
                             </a>

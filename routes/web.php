@@ -22,15 +22,16 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/logout', [LoginController::class, 'actionLogout'])->name('logout')->middleware('auth');
 
 
-Route::get('', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/ajuan/tambah', [AjuanController::class, 'tambah'])->name('ajuan.tambah')->middleware('auth');
-Route::get('/ajuan/tambah/action', [AjuanController::class, 'tambahAction'])->name('ajuan.tambah.action')->middleware('auth');
 Route::get('/ajuan/daftar', [AjuanController::class, 'index'])->name('ajuan.daftar')->middleware('auth');
-
-
 Route::get('/ajuan/edit/{id}', [AjuanController::class, 'editId'])->name('ajuan.editId')->middleware('auth');
 Route::get('/ajuan/edit/', [AjuanController::class, 'edit'])->name('ajuan.edit')->middleware('auth');
-Route::get('/ajuan/edit/action', [AjuanController::class, 'editAction'])->name('ajuan.edit.action')->middleware('auth');
+Route::get('/ajuan/hapus/{id}', [AjuanController::class, 'hapusAction'])->name('ajuan.hapus');
+
+Route::get('/ajuan/action', [AjuanController::class, 'formAction'])->name('ajuan.form.action')->middleware('auth');
+
 
 // Route::group(['middleware' => 'checkRole:0,1'], function () {
 //     // Routes accessible to Admin and Superadmin

@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pengajuan;
-use App\Models\PengajuanProses;
+use App\Models\PengajuanPending;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class AjuanController extends Controller
 {
+    private function resetSession()
+    {
+        // Reset Session
+        session()->forget('edit_id');
+        session()->forget('action_id');
+    }
+
     //
     public function index(Request $request)
     {
         $currentRoute = "ajuan.daftar";
 
-        $allData = Pengajuan::all();
+        $allData = PengajuanPending::all();
 
-        // Reset Action
-        session()->forget('edit_id');
-        session()->forget('action_id');
+        $this->resetSession();
 
         // Current page number
         $currentPage = $request->get('page', 1);
@@ -44,33 +48,11 @@ class AjuanController extends Controller
     }
     public function tambah()
     {
+        $this->resetSession();
+
         $currentRoute = "ajuan.tambah";
         session(['action_id' => "tambah"]); // Store Action in session
-        return view('pages.ajuan.tambah', ['currentRoute' => $currentRoute]);
-    }
-    public function tambahAction(Request $request)
-    {
-        $validatedData = $request->validate([
-            'nama_pengajuan' => 'required|string|max:40',
-            'deskripsi_pengajuan' => 'nullable|string',
-            'jumlah_anggaran_pengajuan' => 'required|integer',
-            'detail_anggaran_pengajuan' => 'required|string',
-            'sifat_pengajuan' => 'required|in:0,1',
-        ]);
-
-        $dataAdd = new PengajuanProses();
-        $dataAdd->nama_pengajuan = $validatedData['nama_pengajuan'];
-        $dataAdd->deskripsi_pengajuan = $validatedData['deskripsi_pengajuan'];
-        $dataAdd->jumlah_anggaran_pengajuan = $validatedData['jumlah_anggaran_pengajuan'];
-        $dataAdd->detail_anggaran_pengajuan = $validatedData['detail_anggaran_pengajuan'];
-        $dataAdd->sifat_pengajuan = $validatedData['sifat_pengajuan'];
-
-        if ($dataAdd->save()) {
-            // Redirect to a success page or login page
-            return redirect('/ajuan/daftar')->with('success', 'Penambahan Pengajuan Anggaran sukses diajukan, silahkan tunggu proses');
-        } else {
-            return redirect()->back()->withInput()->withErrors($validatedData);
-        }
+        return view('pages.ajuan.form', ['currentRoute' => $currentRoute]);
     }
 
     public function editId($id)
@@ -79,20 +61,20 @@ class AjuanController extends Controller
 
         session(['edit_id' => $id]); // Store ID in session
         session(['action_id' => "edit"]); // Store Action in session
-        // TODO: RENAME IT TO MAKE IT UNIVERSAL
         return redirect()->route('ajuan.edit'); // Return the edit form view
     }
     public function edit()
     {
         $currentRoute = "ajuan.edit";
 
-        $ajuan = Pengajuan::find(session("edit_id"));
-        // TODO: RENAME IT TO MAKE IT UNIVERSAL
-        return view('pages.ajuan.tambah', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
+        $ajuan = PengajuanPending::find(session("edit_id"));
+        return view('pages.ajuan.form', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
     }
 
-    public function editAction(Request $request)
+    public function formAction(Request $request)
     {
+        $message = "";
+
         $validatedData = $request->validate([
             'nama_pengajuan' => 'required|string|max:40',
             'deskripsi_pengajuan' => 'nullable|string',
@@ -101,20 +83,68 @@ class AjuanController extends Controller
             'sifat_pengajuan' => 'required|in:0,1',
         ]);
 
-        // TODO: ACTION EDIT TO DB
-         return redirect('/ajuan/daftar');
-        // $dataAdd = new PengajuanProses();
-        // $dataAdd->nama_pengajuan = $validatedData['nama_pengajuan'];
-        // $dataAdd->deskripsi_pengajuan = $validatedData['deskripsi_pengajuan'];
-        // $dataAdd->jumlah_anggaran_pengajuan = $validatedData['jumlah_anggaran_pengajuan'];
-        // $dataAdd->detail_anggaran_pengajuan = $validatedData['detail_anggaran_pengajuan'];
-        // $dataAdd->sifat_pengajuan = $validatedData['sifat_pengajuan'];
 
-        // if ($dataAdd->save()) {
-        //     // Redirect to a success page or login page
-        //     return redirect('/ajuan/daftar')->with('success', 'Penambahan Pengajuan Anggaran sukses diajukan, silahkan tunggu proses');
-        // } else {
-        //     return redirect()->back()->withInput()->withErrors($validatedData);
-        // }
+        $dataForm = null; // Initialize as null to prevent issues.
+
+        if (session("action_id") == "tambah") {
+            $dataForm = new PengajuanPending();
+
+            $dataForm->nama_pengajuan = $validatedData['nama_pengajuan'];
+            $dataForm->deskripsi_pengajuan = $validatedData['deskripsi_pengajuan'];
+            $dataForm->jumlah_anggaran_pengajuan = $validatedData['jumlah_anggaran_pengajuan'];
+            $dataForm->detail_anggaran_pengajuan = $validatedData['detail_anggaran_pengajuan'];
+            $dataForm->sifat_pengajuan = $validatedData['sifat_pengajuan'];
+
+            $message = "Penambahan Pengajuan Anggaran sukses diajukan, silahkan tunggu proses";
+        } elseif (session("action_id") == "edit" && session("edit_id")) {
+            // Edit existing data
+            $editId = session("edit_id");
+
+            // Fetch the existing record
+            $dataForm = PengajuanPending::find($editId);
+
+            if (!$dataForm) {
+                // If the record is not found, redirect with an error
+                return redirect('/ajuan/daftar')->with('error', 'Data pengajuan tidak ditemukan.');
+            }
+
+            // Update fields with validated data
+            $dataForm->nama_pengajuan = $validatedData['nama_pengajuan'];
+            $dataForm->deskripsi_pengajuan = $validatedData['deskripsi_pengajuan'];
+            $dataForm->jumlah_anggaran_pengajuan = $validatedData['jumlah_anggaran_pengajuan'];
+            $dataForm->detail_anggaran_pengajuan = $validatedData['detail_anggaran_pengajuan'];
+            $dataForm->sifat_pengajuan = $validatedData['sifat_pengajuan'];
+
+            $message = "Pengajuan Anggaran berhasil diperbarui.";
+        }
+
+        // Save the data
+        if ($dataForm->save()) {
+            return redirect('/ajuan/daftar')->with('success', $message);
+        } else {
+            return redirect()->back()->withInput()->withErrors($validatedData);
+        }
     }
+
+
+    public function hapusAction($id)
+    {
+        // Find the record by ID
+        $data = PengajuanPending::find($id);
+
+        if (!$data) {
+            // If the record is not found, redirect with an error
+            return redirect('/ajuan/daftar')->with('error', 'Data pengajuan tidak ditemukan.');
+        }
+
+        // Attempt to delete the record
+        if ($data->delete()) {
+            // Redirect to the list page with a success message
+            return redirect('/ajuan/daftar')->with('success', 'Pengajuan Anggaran berhasil dihapus.');
+        } else {
+            // If deletion fails, redirect back with an error
+            return redirect('/ajuan/daftar')->with('error', 'Pengajuan Anggaran gagal dihapus.');
+        }
+    }
+
 }

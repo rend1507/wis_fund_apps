@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\PengajuanProses;
+use App\Models\PengajuanPending;
 use App\Models\Pengajuan;
 
 class HomeController extends Controller
@@ -13,10 +13,10 @@ class HomeController extends Controller
     public function index()
     {
         $currentRoute = "home";
-        $countPending = PengajuanProses::count();
-        $countSuccess = Pengajuan::count(); //TEMP
-        $countReject = Pengajuan::count(); //TEMP
-        $countTotal = Pengajuan::count(); //TEMP
+        $countPending = PengajuanPending::count();
+        $countSuccess = PengajuanPending::count(); //TEMP
+        $countReject = PengajuanPending::count(); //TEMP
+        $countTotal = PengajuanPending::count(); //TEMP
 
         return view('home', [
             'currentRoute' => $currentRoute,
