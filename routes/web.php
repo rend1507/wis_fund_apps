@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AjuanController;
+use App\Http\Controllers\UserController;
 
 
 Route::group(['middleware' => 'guest'], function () {
@@ -31,6 +32,14 @@ Route::get('/ajuan/edit/', [AjuanController::class, 'edit'])->name('ajuan.edit')
 Route::get('/ajuan/hapus/{id}', [AjuanController::class, 'hapusAction'])->name('ajuan.hapus');
 
 Route::get('/ajuan/action', [AjuanController::class, 'formAction'])->name('ajuan.form.action')->middleware('auth');
+
+
+
+Route::get('/user/tambah', [UserController::class, 'tambah'])->name('user.tambah')->middleware('auth');
+Route::get('/user/daftar', [UserController::class, 'index'])->name('user.daftar')->middleware('auth');
+Route::get('/user/edit/{id}', [UserController::class, 'editId'])->name('user.editId')->middleware('auth');
+Route::get('/user/edit/', [UserController::class, 'edit'])->name('user.edit')->middleware('auth');
+Route::get('/user/hapus/{id}', [UserController::class, 'hapusAction'])->name('user.hapus');
 
 
 // Route::group(['middleware' => 'checkRole:0,1'], function () {

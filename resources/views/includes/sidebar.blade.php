@@ -1,11 +1,10 @@
-
 <!--begin::Sidebar-->
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
         <!--begin::Brand Link--> <a href="./index.html" class="brand-link">
             <!--begin::Brand Image--> <img src="<?=url("/")?>/assets/img/AdminLTELogo.png" alt="AdminLTE Logo"
-                class="brand-image opacity-75 shadow">
+            class="brand-image opacity-75 shadow">
             <!--end::Brand Image-->
             <!--begin::Brand Text--> <span class="brand-text fw-light">AdminLTE 4</span>
             <!--end::Brand Text-->
@@ -19,26 +18,53 @@
             <!--begin::Sidebar Menu-->
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 <li class="nav-item active">
-                    <a href="<?= route('home')?>" class="nav-link <?=($currentRoute == "home") ? "active" : ""?>">
+                    <a href="<?= route('home')?>" class="nav-link <?=($currentRoute == " home") ? "active" : "" ?>">
                         <i class="nav-icon bi bi-house-fill"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item <?=(explode(".", $currentRoute)[0] == "ajuan") ? "menu-open" : ""?>"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-card-list"></i>
+                <li class="nav-item <?=(explode(" .", $currentRoute)[0]=="ajuan" ) ? "menu-open" : "" ?>"> <a href="#"
+                        class="nav-link">
+                        <i class="nav-icon bi bi-card-list"></i>
                         <p>
                             Pengajuan
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item"> <a href="<?=route('ajuan.daftar')?>" class="nav-link <?=($currentRoute == "ajuan.daftar") ? "active" : ""?>"> <i
+                        <li class="nav-item"> <a href="<?=route('ajuan.daftar')?>"
+                                class="nav-link <?=($currentRoute == " ajuan.daftar") ? "active" : "" ?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Daftar Pengajuan</p>
                             </a>
                         </li>
-                        <li class="nav-item"> <a href="<?=route('ajuan.tambah')?>" class="nav-link <?=($currentRoute == "ajuan.tambah") ? "active" : ""?>"> <i
+                        <li class="nav-item"> <a href="<?=route('ajuan.tambah')?>"
+                                class="nav-link <?=($currentRoute == " ajuan.tambah") ? "active" : "" ?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Tambah Pengajuan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item <?=(explode(" .", $currentRoute)[0]=="user" ) ? "menu-open" : "" ?>"> <a href="#"
+                        class="nav-link">
+                        <i class="nav-icon bi bi-people-fill"></i>
+                        <p>
+                            User
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item"> <a href="<?=route('user.daftar')?>"
+                                class="nav-link <?=($currentRoute == " user.daftar") ? "active" : "" ?>"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Daftar User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item"> <a href="<?=route('user.tambah')?>"
+                                class="nav-link <?=($currentRoute == " user.tambah") ? "active" : "" ?>"> <i
+                                    class="nav-icon bi bi-circle"></i>
+                                <p>Tambah User</p>
                             </a>
                         </li>
                     </ul>
