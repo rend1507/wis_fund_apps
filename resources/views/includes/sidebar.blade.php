@@ -23,7 +23,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item <?=(explode(" .", $currentRoute)[0]=="ajuan" ) ? "menu-open" : "" ?>"> <a href="#"
+                <li class="nav-item <?=(explode(".", $currentRoute)[0]=="ajuan" ) ? "menu-open" : "" ?>"> <a href="#"
                         class="nav-link">
                         <i class="nav-icon bi bi-card-list"></i>
                         <p>
@@ -33,20 +33,20 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item"> <a href="<?=route('ajuan.daftar')?>"
-                                class="nav-link <?=($currentRoute == " ajuan.daftar") ? "active" : "" ?>"> <i
+                                class="nav-link <?=($currentRoute == "ajuan.daftar") ? "active" : "" ?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Daftar Pengajuan</p>
                             </a>
                         </li>
                         <li class="nav-item"> <a href="<?=route('ajuan.tambah')?>"
-                                class="nav-link <?=($currentRoute == " ajuan.tambah") ? "active" : "" ?>"> <i
+                                class="nav-link <?=($currentRoute == "ajuan.tambah") ? "active" : "" ?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Tambah Pengajuan</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item <?=(explode(" .", $currentRoute)[0]=="user" ) ? "menu-open" : "" ?>"> <a href="#"
+                <li class="nav-item <?=(explode(".", $currentRoute)[0]=="user" ) ? "menu-open" : "" ?>"> <a href="#"
                         class="nav-link">
                         <i class="nav-icon bi bi-people-fill"></i>
                         <p>
@@ -56,13 +56,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item"> <a href="<?=route('user.daftar')?>"
-                                class="nav-link <?=($currentRoute == " user.daftar") ? "active" : "" ?>"> <i
+                                class="nav-link <?=($currentRoute == "user.daftar") ? "active" : "" ?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Daftar User</p>
                             </a>
                         </li>
                         <li class="nav-item"> <a href="<?=route('user.tambah')?>"
-                                class="nav-link <?=($currentRoute == " user.tambah") ? "active" : "" ?>"> <i
+                                class="nav-link <?=($currentRoute == "user.tambah") ? "active" : "" ?>"> <i
                                     class="nav-icon bi bi-circle"></i>
                                 <p>Tambah User</p>
                             </a>

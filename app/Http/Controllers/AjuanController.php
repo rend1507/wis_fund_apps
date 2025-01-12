@@ -8,6 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class AjuanController extends Controller
 {
+    private $mainRoute = 'ajuan';
     private function resetSession()
     {
         // Reset Session
@@ -18,7 +19,7 @@ class AjuanController extends Controller
     //
     public function index(Request $request)
     {
-        $currentRoute = "ajuan.daftar";
+        $currentRoute = $this->mainRoute.".daftar";
 
         $allData = PengajuanPending::all();
 
@@ -44,15 +45,15 @@ class AjuanController extends Controller
 
 
 
-        return view('pages.ajuan.daftar', ['currentRoute' => $currentRoute, 'data' => $data, ]);
+        return view('pages.'. $this->mainRoute .'.daftar', ['currentRoute' => $currentRoute, 'data' => $data, ]);
     }
     public function tambah()
     {
         $this->resetSession();
 
-        $currentRoute = "ajuan.tambah";
+        $currentRoute = $this->mainRoute.".tambah";
         session(['action_id' => "tambah"]); // Store Action in session
-        return view('pages.ajuan.form', ['currentRoute' => $currentRoute]);
+        return view('pages.'. $this->mainRoute.'.form', ['currentRoute' => $currentRoute]);
     }
 
     public function editId($id)
@@ -61,14 +62,14 @@ class AjuanController extends Controller
 
         session(['edit_id' => $id]); // Store ID in session
         session(['action_id' => "edit"]); // Store Action in session
-        return redirect()->route('ajuan.edit'); // Return the edit form view
+        return redirect()->route($this->mainRoute.'.edit'); // Return the edit form view
     }
     public function edit()
     {
-        $currentRoute = "ajuan.edit";
+        $currentRoute = $this->mainRoute.".edit";
 
         $ajuan = PengajuanPending::find(session("edit_id"));
-        return view('pages.ajuan.form', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
+        return view('pages.'. $this->mainRoute .'.form', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
     }
 
     public function formAction(Request $request)
