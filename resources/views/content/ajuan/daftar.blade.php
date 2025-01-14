@@ -53,24 +53,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($data as $ajuan)
+                                @foreach($data as $item)
                                 <tr class="align-middle">
                                     <td>{{ $loop->iteration }}.</td>
-                                    <td>{{ $ajuan->nama_pengajuan }}</td>
-                                    <td>{{ $ajuan->deskripsi_pengajuan }}</td>
-                                    <td>{{ $ajuan->jumlah_anggaran_pengajuan }}</td>
-                                    <td>{{ $ajuan->detail_anggaran_pengajuan }}</td>
+                                    <td>{{ $item->nama_pengajuan }}</td>
+                                    <td>{{ $item->deskripsi_pengajuan }}</td>
+                                    <td>{{ $item->jumlah_anggaran_pengajuan }}</td>
+                                    <td>{{ $item->detail_anggaran_pengajuan }}</td>
                                     <td class="text-center">
-                                        <div class="badge w-100 bg-{{ $ajuan->sifat_pengajuan==" 0" ? "primary"
+                                        <div class="badge w-100 bg-{{ $item->sifat_pengajuan==" 0" ? "primary"
                                             : "danger" }}">
-                                            {{ $ajuan->sifat_pengajuan=="0" ? "Biasa": "MENDESAK"}}
+                                            {{ $item->sifat_pengajuan=="0" ? "Biasa": "MENDESAK"}}
                                         </div>
                                     </td>
-                                    <td>{{ $ajuan->created_at_pengajuan_formatted }}</td>
+                                    <td>{{ $item->created_at_pengajuan_formatted }}</td>
                                     <td>
-                                        <a href="<?=route('ajuan.editId', ['id'=> $ajuan->id_pengajuan])?>" class="btn
+                                        <a href="<?=route('ajuan.editId', ['id'=> $item->id_pengajuan])?>" class="btn
                                             btn-warning">Edit</a>
-                                        <a href="{{ route('ajuan.hapus', $ajuan->id_pengajuan) }}"
+                                        <a href="{{ route('ajuan.hapus', $item->id_pengajuan) }}"
                                             class="btn btn-danger"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?');">
                                             Hapus

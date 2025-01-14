@@ -16,6 +16,7 @@ class UserController extends Controller
         // Reset Session
         session()->forget('edit_id');
         session()->forget('action_id');
+        session()->forget('route_id');
     }
 
     //
@@ -64,10 +65,17 @@ class UserController extends Controller
 
         session(['edit_id' => $id]); // Store ID in session
         session(['action_id' => "edit"]); // Store Action in session
+        session(['route_id' => $this->mainRoute]); // Store ID of action in session
+
         return redirect()->route('user.edit'); // Return the edit form view
     }
     public function edit()
     {
+        // Check if it from the User Edit, else, it redirect to home
+        if (session("route_id") != $this->mainRoute) {
+            return redirect()->route('home');
+        }
+
         $currentRoute = "user.edit";
 
         $ajuan = User::find(session("edit_id"));

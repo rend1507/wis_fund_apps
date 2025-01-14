@@ -54,9 +54,14 @@
                                     <td>{{ $loop->iteration }}.</td>
                                     <td>{{ $item->name }}</td>
                                     <td>
-                                    @if(auth()->user()->id != $item->id)
-                                        bisa dihapus
-                                    @endif
+                                        @if(auth()->user()->id != $item->id)
+                                        <a href="<?=route('user.editId', ['id'=> $item->id])?>" class="btn btn-warning">Edit</a>
+                                        <a href="{{ route('user.hapus', $item->id) }}"
+                                            class="btn btn-danger"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?');">
+                                            Hapus
+                                        </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
