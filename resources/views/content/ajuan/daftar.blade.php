@@ -31,13 +31,18 @@
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
+                @elseif (session("danger"))
+                <div class="alert alert-danger">
+                    {{ session('danger') }}
+                </div>
                 @endif
             </div>
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-body">
                         @if ($data->isEmpty())
-                        <div class="text-center h2">Data masih kosong<br><a href="<?=route('ajuan.tambah')?>" class="btn btn-success" role="button">Tambah Pengajuan</a></div>
+                        <div class="text-center h2">Data masih kosong<br><a href="<?=route('ajuan.tambah')?>"
+                                class="btn btn-success" role="button">Tambah Pengajuan</a></div>
                         @else
                         <table class="table table-bordered">
                             <thead>
@@ -70,8 +75,7 @@
                                     <td>
                                         <a href="<?=route('ajuan.editId', ['id'=> $item->id_pengajuan])?>" class="btn
                                             btn-warning">Edit</a>
-                                        <a href="{{ route('ajuan.hapus', $item->id_pengajuan) }}"
-                                            class="btn btn-danger"
+                                        <a href="{{ route('ajuan.hapus', $item->id_pengajuan) }}" class="btn btn-danger"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?');">
                                             Hapus
                                         </a>

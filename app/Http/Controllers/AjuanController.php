@@ -9,12 +9,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class AjuanController extends Controller
 {
     private $mainRoute = 'ajuan';
+
     private function resetSession()
     {
         // Reset Session
-        session()->forget('edit_id');
-        session()->forget('action_id');
-        session()->forget('route_id');
+        session()->forget($this->mainRoute . '_edit_id');
     }
 
     //
@@ -59,80 +58,74 @@ class AjuanController extends Controller
 
     public function editId($id)
     {
-
-
-        session(['edit_id' => $id]); // Store ID in session
-        session(['action_id' => "edit"]); // Store Action in session
-        session(['route_id' => $this->mainRoute]); // Store ID of action in session
+        session([$this->mainRoute . '_edit_id' => $id]); // Store ID in session
         return redirect()->route($this->mainRoute.'.edit'); // Return the edit form view
     }
     public function edit()
     {
-        // Check if it from the User Edit, else, it redirect to home
-        if (session("route_id") != $this->mainRoute) {
-            return redirect()->route('home');
-        }
 
         $currentRoute = $this->mainRoute.".edit";
 
-        $ajuan = PengajuanPending::find(session("edit_id"));
+        $ajuan = PengajuanPending::find(session($this->mainRoute . '_edit_id'));
+
+
+        if (!$ajuan) {
+            // Handle the error, e.g., show an error message or redirect
+            return redirect()->route('ajuan.daftar')->with('error', 'Ajuan tidak ditemukan');
+        }
+
         return view('pages.'. $this->mainRoute .'.form', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
     }
-
     public function formAction(Request $request)
     {
+        // Common validation rules
+        $rules = [
+            'name' => 'required|string|max:40',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:8|max:255',
+        ];
+
+        $previousUrl = url()->previous();
+
+        if (str_contains($previousUrl, 'user/edit')) {
+            $rules['id'] = 'required|integer';
+        }
+
+        // Validate input
+        $validatedData = $request->validate($rules);
+
+        // Initialize variables
+        $dataForm = null;
         $message = "";
 
-        $validatedData = $request->validate([
-            'nama_pengajuan' => 'required|string|max:40',
-            'deskripsi_pengajuan' => 'nullable|string',
-            'jumlah_anggaran_pengajuan' => 'required|integer',
-            'detail_anggaran_pengajuan' => 'required|string',
-            'sifat_pengajuan' => 'required|in:0,1',
-        ]);
-
-
-        $dataForm = null; // Initialize as null to prevent issues.
-
-        if (session("action_id") == "tambah") {
-            $dataForm = new PengajuanPending();
-
-            $dataForm->nama_pengajuan = $validatedData['nama_pengajuan'];
-            $dataForm->deskripsi_pengajuan = $validatedData['deskripsi_pengajuan'];
-            $dataForm->jumlah_anggaran_pengajuan = $validatedData['jumlah_anggaran_pengajuan'];
-            $dataForm->detail_anggaran_pengajuan = $validatedData['detail_anggaran_pengajuan'];
-            $dataForm->sifat_pengajuan = $validatedData['sifat_pengajuan'];
-
-            $message = "Penambahan Pengajuan Anggaran sukses diajukan, silahkan tunggu proses";
-        } elseif (session("action_id") == "edit" && session("edit_id")) {
-            // Edit existing data
-            $editId = session("edit_id");
-
-            // Fetch the existing record
-            $dataForm = PengajuanPending::find($editId);
+        if (str_contains($previousUrl, 'user/tambah')) {
+            $dataForm = new User();
+            $message = "Penambahan User berhasil.";
+        } elseif (str_contains($previousUrl, 'user/edit')) {
+            $dataForm = User::find($validatedData['id']);
 
             if (!$dataForm) {
-                // If the record is not found, redirect with an error
-                return redirect('/ajuan/daftar')->with('error', 'Data pengajuan tidak ditemukan.');
+                return redirect('/user/daftar')->with('danger', 'Data user tidak ditemukan.');
             }
 
-            // Update fields with validated data
-            $dataForm->nama_pengajuan = $validatedData['nama_pengajuan'];
-            $dataForm->deskripsi_pengajuan = $validatedData['deskripsi_pengajuan'];
-            $dataForm->jumlah_anggaran_pengajuan = $validatedData['jumlah_anggaran_pengajuan'];
-            $dataForm->detail_anggaran_pengajuan = $validatedData['detail_anggaran_pengajuan'];
-            $dataForm->sifat_pengajuan = $validatedData['sifat_pengajuan'];
-
-            $message = "Pengajuan Anggaran berhasil diperbarui.";
+            $message = "User berhasil diperbarui.";
         }
 
-        // Save the data
+        // Populate and save the data
+        $dataForm->fill([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => $validatedData['password'],
+        ]);
+
+        // Save and return response
         if ($dataForm->save()) {
-            return redirect('/ajuan/daftar')->with('success', $message);
-        } else {
-            return redirect()->back()->withInput()->withErrors($validatedData);
+            return redirect('/user/daftar')->with('success', $message);
         }
+
+        return redirect()->back()->withInput()->withErrors('Terjadi kesalahan saat menyimpan data.');
     }
+
 
 
     public function hapusAction($id)
@@ -142,7 +135,7 @@ class AjuanController extends Controller
 
         if (!$data) {
             // If the record is not found, redirect with an error
-            return redirect('/ajuan/daftar')->with('error', 'Data pengajuan tidak ditemukan.');
+            return redirect('/ajuan/daftar')->with('danger', 'Data pengajuan tidak ditemukan.');
         }
 
         // Attempt to delete the record
@@ -151,7 +144,7 @@ class AjuanController extends Controller
             return redirect('/ajuan/daftar')->with('success', 'Pengajuan Anggaran berhasil dihapus.');
         } else {
             // If deletion fails, redirect back with an error
-            return redirect('/ajuan/daftar')->with('error', 'Pengajuan Anggaran gagal dihapus.');
+            return redirect('/ajuan/daftar')->with('danger', 'Pengajuan Anggaran gagal dihapus.');
         }
     }
 

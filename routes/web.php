@@ -31,7 +31,7 @@ Route::get('/ajuan/edit/{id}', [AjuanController::class, 'editId'])->name('ajuan.
 Route::get('/ajuan/edit/', [AjuanController::class, 'edit'])->name('ajuan.edit')->middleware('auth');
 Route::get('/ajuan/hapus/{id}', [AjuanController::class, 'hapusAction'])->name('ajuan.hapus');
 
-Route::get('/ajuan/action', [AjuanController::class, 'formAction'])->name('ajuan.form.action')->middleware('auth');
+Route::post('/ajuan/action', [AjuanController::class, 'formAction'])->name('ajuan.form.action')->middleware('auth');
 
 
 

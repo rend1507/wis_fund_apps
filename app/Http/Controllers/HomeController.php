@@ -12,9 +12,12 @@ class HomeController extends Controller
     private function resetSession()
     {
         // Reset Session
-        session()->forget('edit_id');
-        session()->forget('action_id');
-        session()->forget('route_id');
+        $suffix = "_edit_id";
+        foreach (session()->all() as $key => $value) {
+            if (str_ends_with($key, $suffix)) {
+                session()->forget($key);
+            }
+        }
     }
     public function index()
     {

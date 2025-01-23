@@ -31,6 +31,10 @@
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
+                @elseif (session("danger"))
+                <div class="alert alert-danger">
+                    {{ session('danger') }}
+                </div>
                 @endif
             </div>
             <div class="col-12">
@@ -45,6 +49,7 @@
                                 <tr>
                                     <th style="width: 10px">No.</th>
                                     <th>Nama</th>
+                                    <th>Level</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -53,12 +58,13 @@
                                 <tr class="align-middle">
                                     <td>{{ $loop->iteration }}.</td>
                                     <td>{{ $item->name }}</td>
+                                    <td>test Level</td>
                                     <td>
                                         @if(auth()->user()->id != $item->id)
-                                        <a href="<?=route('user.editId', ['id'=> $item->id])?>" class="btn btn-warning">Edit</a>
-                                        <a href="{{ route('user.hapus', $item->id) }}"
-                                            class="btn btn-danger"
-                                            onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?');">
+                                        <a href="<?=route('user.editId', ['id'=> $item->id])?>"
+                                            class="btn btn-warning">Edit</a>
+                                        <a href="{{ route('user.hapus', $item->id) }}" class="btn btn-danger"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus User ini?');">
                                             Hapus
                                         </a>
                                         @endif

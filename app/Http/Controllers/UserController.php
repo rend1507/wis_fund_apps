@@ -9,23 +9,21 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class UserController extends Controller
 {
     // Define a private variable
-    private $mainRoute= 'user';
+    private $mainRoute = 'user';
 
     private function resetSession()
     {
         // Reset Session
-        session()->forget('edit_id');
-        session()->forget('action_id');
-        session()->forget('route_id');
+        session()->forget($this->mainRoute . '_edit_id');
     }
 
     //
     public function index(Request $request)
     {
-        $currentRoute = $this->mainRoute.".daftar";
+        $currentRoute = $this->mainRoute . ".daftar";
 
         $allData = User::all();
-        
+
         $this->resetSession();
 
         // Current page number
@@ -48,88 +46,81 @@ class UserController extends Controller
 
 
 
-        return view('pages.'. $this->mainRoute.'.daftar', ['currentRoute' => $currentRoute, 'data' => $data, ]);
+        return view('pages.' . $this->mainRoute . '.daftar', ['currentRoute' => $currentRoute, 'data' => $data,]);
     }
     public function tambah()
     {
         $this->resetSession();
 
-        $currentRoute =  $this->mainRoute.".tambah";
-        session(['action_id' => "tambah"]); // Store Action in session
-        return view('pages.'.$this->mainRoute.'.form', ['currentRoute' => $currentRoute]);
+        $currentRoute = $this->mainRoute . ".tambah";
+        return view('pages.' . $this->mainRoute . '.form', ['currentRoute' => $currentRoute]);
     }
 
     public function editId($id)
     {
-
-
-        session(['edit_id' => $id]); // Store ID in session
-        session(['action_id' => "edit"]); // Store Action in session
-        session(['route_id' => $this->mainRoute]); // Store ID of action in session
-
+        session([$this->mainRoute . '_edit_id' => $id]); // Store ID in session
         return redirect()->route('user.edit'); // Return the edit form view
     }
     public function edit()
     {
-        // Check if it from the User Edit, else, it redirect to home
-        if (session("route_id") != $this->mainRoute) {
-            return redirect()->route('home');
+
+        $currentRoute = $this->mainRoute . ".edit";
+
+        $user = User::find(session($this->mainRoute . '_edit_id'));
+
+        if (!$user) {
+            // Handle the error, e.g., show an error message or redirect
+            return redirect()->route('user.daftar')->with('error', 'User tidak ditemukan');
         }
-
-        $currentRoute = "user.edit";
-
-        $ajuan = User::find(session("edit_id"));
-        return view('pages.'. $this->mainRoute .'.form', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
+        return view('pages.' . $this->mainRoute . '.form', ['currentRoute' => $currentRoute, 'data' => $user,]); // Return the edit form view
     }
-
     public function formAction(Request $request)
     {
-        // INIT
-        $message = "";
-        $dataForm = null; // Initialize as null to prevent issues.
-
+        // Validate input
         $validatedData = $request->validate([
             'name' => 'required|string|max:40',
-            'email' => 'required|string',
-            'password' => 'required|string', //TODO: encrypt
+            'email' => 'required|email|max:255', // Validate email and limit length
+            'password' => 'required|string|min:8|max:255', // Ensure minimum length for security
+            'id' => 'nullable|integer', // Add id validation for edit
         ]);
 
-        if (session("action_id") == "tambah") {
+        // Initialize variables
+        $dataForm = null;
+        $message = "";
+        $previousUrl = url()->previous();
+
+        if (str_contains($previousUrl, 'user/tambah')) {
             $dataForm = new User();
-
-            $dataForm->name = $validatedData['name'];
-            $dataForm->email = $validatedData['email'];
-            $dataForm->password = $validatedData['password'];
-
-            $message = "Penambahan User berhasil";
-        } elseif (session("action_id") == "edit" && session("edit_id")) {
-            // Edit existing data
-            $editId = session("edit_id");
-
-            // Fetch the existing record
-            $dataForm = User::find($editId);
-
-            if (!$dataForm) {
-                // If the record is not found, redirect with an error
-                return redirect('/user/daftar')->with('error', 'Data pengajuan tidak ditemukan.');
+            $message = "Penambahan User berhasil.";
+        } elseif (str_contains($previousUrl, 'user/edit')) {
+            if (empty($validatedData['id'])) {
+                return redirect('/user/daftar')->with('danger', 'ID user tidak ditemukan.');
             }
 
-            // Update fields with validated data
-            $dataForm->name = $validatedData['name'];
-            $dataForm->email = $validatedData['email'];
-            $dataForm->password = $validatedData['password'];
+            $dataForm = User::find($validatedData['id']);
+
+            if (!$dataForm) {
+                return redirect('/user/daftar')->with('danger', 'Data user tidak ditemukan.');
+            }
 
             $message = "User berhasil diperbarui.";
         }
 
-        // Save the data
+        // Populate and save the data
+        $dataForm->fill([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => $validatedData['password'],
+        ]);
+
+        // Save and return response
         if ($dataForm->save()) {
             return redirect('/user/daftar')->with('success', $message);
-        } else {
-            dd($validatedData);
-            return redirect()->back()->withInput()->withErrors($validatedData);
         }
+
+        return redirect()->back()->withInput()->withErrors('Terjadi kesalahan saat menyimpan data.');
     }
+
 
 
     public function hapusAction($id)
@@ -137,18 +128,24 @@ class UserController extends Controller
         // Find the record by ID
         $data = User::find($id);
 
-        if (!$data) {
-            // If the record is not found, redirect with an error
-            return redirect('/user/daftar')->with('error', 'Data User tidak ditemukan.');
-        }
+        // Check if it was current user's id
+        if ($id != auth()->user()->id) {
+            if (!$data) {
+                // If the record is not found, redirect with an error
+                return redirect('/user/daftar')->with('danger', 'Data User tidak ditemukan.');
+            }
 
-        // Attempt to delete the record
-        if ($data->delete()) {
-            // Redirect to the list page with a success message
-            return redirect('/user/daftar')->with('success', 'User berhasil dihapus.');
+            // Attempt to delete the record
+            if ($data->delete()) {
+                // Redirect to the list page with a success message
+                return redirect('/user/daftar')->with('success', 'User berhasil dihapus.');
+            } else {
+                // If deletion fails, redirect back with an error
+                return redirect('/user/daftar')->with('danger', 'User gagal dihapus.');
+            }
+
         } else {
-            // If deletion fails, redirect back with an error
-            return redirect('/user/daftar')->with('error', 'User gagal dihapus.');
+            return redirect('/user/daftar')->with('danger', 'Anda tidak bisa hapus user anda!');
         }
     }
 

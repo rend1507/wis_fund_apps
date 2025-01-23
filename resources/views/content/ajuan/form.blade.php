@@ -1,3 +1,8 @@
+<?php
+$isEdit = Route::is('ajuan.edit');
+?>
+
+
 <!--begin::App Content Header-->
 <div class="app-content-header">
     <!--begin::Container-->
@@ -31,8 +36,9 @@
             <!--begin::Col-->
             <div class="col">
                 <!--begin::Input Group-->
-                <div class="card card-outline mb-4 <?=session('edit_id') ? 'card-warning' : 'card-success'?>">
-                    <form action="<?=route('ajuan.form.action')?>">
+                <div class="card card-outline mb-4 <?=$isEdit ? 'card-warning' : 'card-success'?>">
+                    <form action="<?=route('ajuan.form.action')?>" method="POST">
+                    @csrf
                     <!--begin::Body-->
                     <div class="card-body">
                         <div class="mb-3">
@@ -72,7 +78,8 @@
                     <!--end::Body-->
                     <!--begin::Footer-->
                     <div class="card-footer">
-                        @if(session('edit_id'))
+                        @if($isEdit)
+                        <input type="disabled" class="hidden d-none invisible" readonly value="<?=$data->id_pengajuan?>" name="id_pengajuan">
                         <button type="submit" class="btn btn-warning float-end">Edit</button>
                         @else
                         <button type="submit" class="btn btn-success float-end">Submit</button>
