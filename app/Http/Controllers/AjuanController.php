@@ -154,21 +154,10 @@ class AjuanController extends Controller
         }
     }
 
-    public function setujuiPengajuan($id)
+    public function setujuiPengajuan($id_pengajuan)
     {
-        try {
-            // Menjalankan prosedur SQL untuk menyetujui pengajuan
-            DB::statement("CALL setujui_pengajuan(?)", [$id]);
-    
-            // Jika berhasil, redirect ke daftar pengajuan dengan pesan sukses
-            return redirect('/ajuan/daftar')->with('success', 'Pengajuan Anggaran berhasil disetujui.');
-    
-        } catch (\Exception $e) {
-            // Log error untuk membantu debugging
-    
-            // Jika terjadi error, redirect ke daftar pengajuan dengan pesan error
-            return redirect('/ajuan/daftar')->with('danger', 'Terjadi kesalahan saat memproses pengajuan.');
-        }
+        DB::statement("CALL setujui_pengajuan(?)", [$id_pengajuan]);
+        return redirect('/ajuan/daftar')->with('danger', 'Pengajuan berhasil disetujui.');
     }
 
     
