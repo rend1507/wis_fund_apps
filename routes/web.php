@@ -33,6 +33,8 @@ Route::get('/ajuan/hapus/{id}', [AjuanController::class, 'hapusAction'])->name('
 
 Route::post('/ajuan/action', [AjuanController::class, 'formAction'])->name('ajuan.form.action')->middleware('auth');
 
+Route::get('/ajuan/setujui/{id}', [AjuanController::class, 'setujuiPengajuan'])->name('ajuan.setujui')->middleware('auth');
+
 
 
 Route::get('/user/tambah', [UserController::class, 'tambah'])->name('user.tambah')->middleware('auth');
@@ -43,6 +45,7 @@ Route::get('/user/hapus/{id}', [UserController::class, 'hapusAction'])->name('us
 
 Route::get('/user/action', [UserController::class, 'formAction'])->name('user.form.action')->middleware('auth');
 
+Route::get('/user/setujui', [UserController::class, 'setujuiPengajuan'])->name('user.setujui')->middleware('auth');
 
 // Route::group(['middleware' => 'checkRole:0,1'], function () {
 //     // Routes accessible to Admin and Superadmin

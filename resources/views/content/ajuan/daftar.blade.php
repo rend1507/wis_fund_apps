@@ -79,6 +79,9 @@
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?');">
                                             Hapus
                                         </a>
+                                        <a href="{{ route('ajuan.setujui', ['id' => $item->id_pengajuan]) }}" class="btn btn-success">
+                                            Setujui
+                                        </a>   
                                     </td>
                                 </tr>
                                 @endforeach
