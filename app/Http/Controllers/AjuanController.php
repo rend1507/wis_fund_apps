@@ -19,7 +19,7 @@ class AjuanController extends Controller
     //
     public function index(Request $request)
     {
-        $currentRoute = $this->mainRoute.".daftar";
+        $currentRoute = $this->mainRoute . ".daftar";
 
         $allData = PengajuanPending::all();
 
@@ -45,26 +45,26 @@ class AjuanController extends Controller
 
 
 
-        return view('pages.'. $this->mainRoute .'.daftar', ['currentRoute' => $currentRoute, 'data' => $data, ]);
+        return view('pages.' . $this->mainRoute . '.daftar', ['currentRoute' => $currentRoute, 'data' => $data,]);
     }
     public function tambah()
     {
         $this->resetSession();
 
-        $currentRoute = $this->mainRoute.".tambah";
+        $currentRoute = $this->mainRoute . ".tambah";
         session(['action_id' => "tambah"]); // Store Action in session
-        return view('pages.'. $this->mainRoute.'.form', ['currentRoute' => $currentRoute]);
+        return view('pages.' . $this->mainRoute . '.form', ['currentRoute' => $currentRoute]);
     }
 
     public function editId($id)
     {
         session([$this->mainRoute . '_edit_id' => $id]); // Store ID in session
-        return redirect()->route($this->mainRoute.'.edit'); // Return the edit form view
+        return redirect()->route($this->mainRoute . '.edit'); // Return the edit form view
     }
     public function edit()
     {
 
-        $currentRoute = $this->mainRoute.".edit";
+        $currentRoute = $this->mainRoute . ".edit";
 
         $ajuan = PengajuanPending::find(session($this->mainRoute . '_edit_id'));
 
@@ -74,20 +74,22 @@ class AjuanController extends Controller
             return redirect()->route('ajuan.daftar')->with('error', 'Ajuan tidak ditemukan');
         }
 
-        return view('pages.'. $this->mainRoute .'.form', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
+        return view('pages.' . $this->mainRoute . '.form', ['currentRoute' => $currentRoute, 'data' => $ajuan,]); // Return the edit form view
     }
     public function formAction(Request $request)
     {
         // Common validation rules
         $rules = [
-            'name' => 'required|string|max:40',
-            'email' => 'required|email|max:255',
-            'password' => 'required|string|min:8|max:255',
+            'nama_pengajuan' => 'required|string|max:40',
+            'deskripsi_pengajuan' => 'nullable|string',
+            'jumlah_anggaran_pengajuan' => 'required|integer',
+            'detail_anggaran_pengajuan' => 'required|string',
+            'sifat_pengajuan' => 'required|in:0,1',
         ];
 
         $previousUrl = url()->previous();
 
-        if (str_contains($previousUrl, $this->mainRoute .'/edit')) {
+        if (str_contains($previousUrl, $this->mainRoute . '/edit')) {
             $rules['id_pengajuan'] = 'required|integer';
         }
 
@@ -98,14 +100,14 @@ class AjuanController extends Controller
         $dataForm = null;
         $message = "";
 
-        if (str_contains($previousUrl, $this->mainRoute .'/tambah')) {
+        if (str_contains($previousUrl, $this->mainRoute . '/tambah')) {
             $dataForm = new PengajuanPending();
             $message = "Tambah Pengajuan berhasil.";
-        } elseif (str_contains($previousUrl, $this->mainRoute .'/edit')) {
+        } elseif (str_contains($previousUrl, $this->mainRoute . '/edit')) {
             $dataForm = PengajuanPending::find($validatedData['id_pengajuan']);
 
             if (!$dataForm) {
-                return redirect($this->mainRoute .'/daftar')->with('danger', 'Data Pengajuan tidak ditemukan.');
+                return redirect($this->mainRoute . '/daftar')->with('danger', 'Data Pengajuan tidak ditemukan.');
             }
 
             $message = "Pengajuan berhasil diperbarui.";
@@ -113,18 +115,21 @@ class AjuanController extends Controller
 
         // Populate and save the data
         $dataForm->fill([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => $validatedData['password'],
+            'nama_pengajuan' => $validatedData['nama_pengajuan'],
+            'deskripsi_pengajuan' => $validatedData['deskripsi_pengajuan'] ?? '-',
+            'jumlah_anggaran_pengajuan' => $validatedData['jumlah_anggaran_pengajuan'],
+            'detail_anggaran_pengajuan' => $validatedData['detail_anggaran_pengajuan'],
+            'sifat_pengajuan' => $validatedData['sifat_pengajuan'],
         ]);
 
         // Save and return response
         if ($dataForm->save()) {
-            return redirect($this->mainRoute.'/daftar')->with('success', $message);
+            return redirect($this->mainRoute . '/daftar')->with('success', $message);
         }
 
         return redirect()->back()->withInput()->withErrors('Terjadi kesalahan saat menyimpan data.');
     }
+
 
 
 
