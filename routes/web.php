@@ -44,9 +44,6 @@ Route::get('/user/edit/', [UserController::class, 'edit'])->name('user.edit')->m
 Route::get('/user/hapus/{id}', [UserController::class, 'hapusAction'])->name('user.hapus');
 
 Route::get('/user/action', [UserController::class, 'formAction'])->name('user.form.action')->middleware('auth');
-
-Route::get('/user/setujui', [UserController::class, 'setujuiPengajuan'])->name('user.setujui')->middleware('auth');
-
 // Route::group(['middleware' => 'checkRole:0,1'], function () {
 //     // Routes accessible to Admin and Superadmin
 
