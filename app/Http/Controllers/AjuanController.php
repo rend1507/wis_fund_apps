@@ -87,8 +87,8 @@ class AjuanController extends Controller
 
         $previousUrl = url()->previous();
 
-        if (str_contains($previousUrl, 'user/edit')) {
-            $rules['id'] = 'required|integer';
+        if (str_contains($previousUrl, $this->mainRoute .'/edit')) {
+            $rules['id_pengajuan'] = 'required|integer';
         }
 
         // Validate input
@@ -98,17 +98,17 @@ class AjuanController extends Controller
         $dataForm = null;
         $message = "";
 
-        if (str_contains($previousUrl, 'user/tambah')) {
-            $dataForm = new User();
-            $message = "Penambahan User berhasil.";
-        } elseif (str_contains($previousUrl, 'user/edit')) {
-            $dataForm = User::find($validatedData['id']);
+        if (str_contains($previousUrl, $this->mainRoute .'/tambah')) {
+            $dataForm = new PengajuanPending();
+            $message = "Tambah Pengajuan berhasil.";
+        } elseif (str_contains($previousUrl, $this->mainRoute .'/edit')) {
+            $dataForm = PengajuanPending::find($validatedData['id_pengajuan']);
 
             if (!$dataForm) {
-                return redirect('/user/daftar')->with('danger', 'Data user tidak ditemukan.');
+                return redirect($this->mainRoute .'/daftar')->with('danger', 'Data Pengajuan tidak ditemukan.');
             }
 
-            $message = "User berhasil diperbarui.";
+            $message = "Pengajuan berhasil diperbarui.";
         }
 
         // Populate and save the data
@@ -120,7 +120,7 @@ class AjuanController extends Controller
 
         // Save and return response
         if ($dataForm->save()) {
-            return redirect('/user/daftar')->with('success', $message);
+            return redirect($this->mainRoute.'/daftar')->with('success', $message);
         }
 
         return redirect()->back()->withInput()->withErrors('Terjadi kesalahan saat menyimpan data.');

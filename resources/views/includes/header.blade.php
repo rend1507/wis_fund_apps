@@ -1,6 +1,7 @@
 <?php
 
-$userName = auth()->user()->name;
+$userName = auth()->user()->email;
+$role = strtoupper(decrypt(session('user_role')));
 
 ?>
 <!--begin::Header-->
@@ -123,7 +124,7 @@ $userName = auth()->user()->name;
                     <li class="user-header text-bg-primary"> <img src="<?=url("/")?>/assets/img/user2-160x160.jpg"
                             class="rounded-circle shadow" alt="User Image">
                         <p>
-                            <?=$userName?> - Web Developer
+                            <?=$userName?> - <?=$role?>
                             <small>Member since Nov. 2023</small>
                         </p>
                     </li>
