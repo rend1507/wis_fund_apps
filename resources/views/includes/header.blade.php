@@ -1,8 +1,7 @@
 <?php
-
-$userName = auth()->user()->email;
-$role = strtoupper(decrypt(session('user_role')));
-
+$userName = session()->has('user_name') ? strtoupper(decrypt(session('user_name'))) : 'NN';
+$role = session()->has('user_role') ? strtoupper(decrypt(session('user_role'))) : 'GUEST';
+?>
 ?>
 <!--begin::Header-->
 <nav class="app-header navbar navbar-expand bg-body">
